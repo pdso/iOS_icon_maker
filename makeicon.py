@@ -80,9 +80,9 @@ def makecontentjsonitem(model, width, scale):
         filename = 'Appicon%sx%s@%sx.png' % (width, width, scale)
 
     return ImageModel("%sx%s" % (width, width),
-                      model,
+                      model.lower(),
                       filename,
-                      "%s" % scale)
+                      "%sx" % scale)
 
 
 def makeimagemodelist(paramsdic, model):
