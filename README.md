@@ -6,12 +6,12 @@ Requires the Python Imaging Library (PIL) to be installed.
 
 # Usage
 
-usage: makeicon.py [-h] [-m model] -b path
+`usage: makeicon.py [-h] [-m model] -b path`
 
 optional arguments:
 
+```
 -h, --help  show this help message and exit
-
 -m model    support device model,eg: iPhone, iPad, Universal, defalut is iPhone
-
 -b path     png file path, 1024x1024 is best.
+```
