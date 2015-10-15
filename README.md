@@ -15,3 +15,9 @@ optional arguments:
 -m model    support device model,eg: iPhone, iPad, Universal, defalut is iPhone
 -b path     png file path, 1024x1024 is best.
 ```
+
+# TODO
+* change the icon file Settings or Spolight.
+* Apple Watch support.
+* custom iOS Deployment Target.
+* format the json file.
