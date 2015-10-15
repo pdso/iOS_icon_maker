@@ -27,9 +27,10 @@ def get_options():
         description="make iOS app icon Images.xcassets."
     )
     parser.add_argument('-m', metavar='model', default='iPhone', type=str,
-                        help='support device model,eg:iPhone, iPad,Universal')
+                        help='support device model,'
+                             'eg: iPhone, iPad, Universal, defalut is iPhone')
     parser.add_argument('-b', metavar='path', type=file,
-                        required=True, help='png file')
+                        required=True, help='png file path, 1024x1024 is best.')
     args = parser.parse_args()
     return args
 
@@ -120,3 +121,4 @@ if __name__ == "__main__":
     filepath = os.path.abspath(args.b.name)
     makeicons(filepath, model)
     makecontentjson(filepath, model)
+    print os.path.dirname(filepath) + 'AppIcon.appiconset'
