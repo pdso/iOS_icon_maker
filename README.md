@@ -21,3 +21,7 @@ optional arguments:
 * Apple Watch support.
 * custom iOS Deployment Target.
 * format the json file.
+
+# The MIT License (MIT)
+
+Copyright (c) 2015 star
