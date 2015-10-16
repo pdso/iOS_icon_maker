@@ -1,8 +1,10 @@
 # iOS icon maker
-Generate different size icon for iPhone and iPad by Pyhton PIL.Use 1024 size icon easy make other size.
+Like [Icon Master](http://imageresier-agrastas.rhcloud.com) or [prepo](https://itunes.apple.com/tw/app/prepo/id476533227?mt=12).Make different size icon for iPhone and iPad by Python PIL.
 
 # Requirements
 Requires the Python Imaging Library (PIL) to be installed.
+
+`pip install PIL`
 
 # Usage
 
@@ -15,6 +17,8 @@ optional arguments:
 -m model    support device model,eg: iPhone, iPad, Universal, defalut is iPhone
 -b path     png file path, 1024x1024 is best.
 ```
+
+>Then move the `AppIcon.appiocnset` folder to Xcode project Assets.xcassets directory.
 
 # The MIT License (MIT)
 
