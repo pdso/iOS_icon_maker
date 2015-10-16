@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import argparse
 import json
 from PIL import Image
@@ -10,15 +11,15 @@ iphonedic = {'29': ['2', '3'],
              '60': ['2', '3']
              }
 
-ipadic = {'29': ['1', '2'],
-          '40': ['1', '2'],
-          '76': ['1', '2']
+ipadic = {'29': ['1.0', '2.0'],
+          '40': ['1.0', '2.0'],
+          '76': ['1.0', '2.0']
           }
 
-universaldic = {'29': ['1', '2', '3'],
-                '40': ['1', '2', '3'],
+universaldic = {'29': ['1.0', '2', '2.0', '3'],
+                '40': ['1.0', '2', '2.0', '3'],
                 '60': ['2', '3'],
-                '76': ['1', '2']
+                '76': ['1.0', '2.0']
                 }
 
 
@@ -26,25 +27,35 @@ def get_options():
     parser = argparse.ArgumentParser(
         description="make iOS app icon Images.xcassets."
     )
-    parser.add_argument('-m', metavar='model', default='iPhone', type=str,
+    parser.add_argument('-m', metavar='model',
+                        default='iPhone', type=str,
                         help='support device model,'
                              'eg: iPhone, iPad, Universal, defalut is iPhone')
-    parser.add_argument('-b', metavar='path', type=file,
-                        required=True, help='png file path, 1024x1024 is best.')
-    args = parser.parse_args()
-    return args
+    try:
+        parser.add_argument('-b', metavar='path', type=file,
+                            required=True,
+                            help='png file path, 1024x1024 is best.')
+        args = parser.parse_args()
+    except IOError, e:
+        if e.errno == 2:
+            sys.exit('IOError: No such file or directory')
+    else:
+        return args
 
 
 def makeicon(path, width, scale):
     img = Image.open(path, 'r')
-    size = int(width) * int(scale), int(width) * int(scale)
+    size = int(width) * int(scale[0]), int(width) * int(scale[0])
     img.thumbnail(size, Image.ANTIALIAS)
     icondir = os.path.dirname(path) + '/AppIcon.appiconset'
     if not os.path.exists(icondir):
         os.mkdir(icondir)
     filename = ''
-    if scale == '1':
-        filename = '/Appicon%sx%s.png' % width
+    if len(scale) == 3:
+        if scale == '1.0':
+            filename = '/Appicon%sx%s~ipad.png' % (width, width)
+        else:
+            filename = '/Appicon%sx%s@%sx~ipad.png' % (width, width, scale[0])
     else:
         filename = '/Appicon%sx%s@%sx.png' % (width, width, scale)
     img.save(icondir+filename, 'PNG')
@@ -65,25 +76,21 @@ def makeicons(path, model):
     return
 
 
-class ImageModel(object):
-    def __init__(self, size, idiom, filename, scale):
-        self.size = size
-        self.idiom = idiom
-        self.filename = filename
-        self.scale = scale
-
-
 def makecontentjsonitem(model, width, scale):
     filename = ''
-    if scale == '1':
-        filename = 'Appicon%sx%s.png' % width
+    if len(scale) == 3:
+        model = 'iPad'
+        if scale == '1.0':
+            filename = 'Appicon%sx%s~ipad.png' % (width, width)
+        else:
+            filename = 'Appicon%sx%s@%sx~ipad.png' % (width, width, scale[0])
     else:
+        model = 'iPhone'
         filename = 'Appicon%sx%s@%sx.png' % (width, width, scale)
-
-    return ImageModel("%sx%s" % (width, width),
-                      model.lower(),
-                      filename,
-                      "%sx" % scale)
+    return {'size': "%sx%s" % (width, width),
+            'idiom': model.lower(),
+            'filename': filename,
+            'scale': "%sx" % scale[0]}
 
 
 def makeimagemodelist(paramsdic, model):
@@ -91,7 +98,7 @@ def makeimagemodelist(paramsdic, model):
     for width, scales in paramsdic.items():
         for scale in scales:
             m = makecontentjsonitem(model, width, scale)
-            images.append(m.__dict__)
+            images.append(m)
     return images
 
 
@@ -118,7 +125,9 @@ def makecontentjson(path, model):
 if __name__ == "__main__":
     args = get_options()
     model = args.m
+    if model not in ['iPhone', 'iPad', 'Universal']:
+        sys.exit('Error: -m,model should be iPhone, iPad or Universal')
     filepath = os.path.abspath(args.b.name)
     makeicons(filepath, model)
     makecontentjson(filepath, model)
-    print os.path.dirname(filepath) + 'AppIcon.appiconset'
+    print os.path.dirname(filepath) + '/AppIcon.appiconset'
