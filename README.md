@@ -1,5 +1,5 @@
 # iOS icon maker
-Like [Icon Master](http://imageresier-agrastas.rhcloud.com) or [prepo](https://itunes.apple.com/tw/app/prepo/id476533227?mt=12).Make different size icon for iPhone and iPad by Python PIL.
+Like [Icon Master](http://imageresier-agrastas.rhcloud.com) or [prepo](https://itunes.apple.com/tw/app/prepo/id476533227?mt=12).Make different size icon for iPhone or iPad by Python PIL.
 
 # Requirements
 Requires the Python Imaging Library (PIL) to be installed.
