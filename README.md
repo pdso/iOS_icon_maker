@@ -20,6 +20,11 @@ optional arguments:
 
 >Then move the `AppIcon.appiocnset` folder to Xcode project Assets.xcassets directory.
 
+![img](/res/xcassets.png)
+
+
 # The MIT License (MIT)
 
 Copyright (c) 2015 star
+
+
