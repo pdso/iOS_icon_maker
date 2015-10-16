@@ -110,7 +110,7 @@ def makecontentjson(path, model):
     contentjson['images'] = makeimagemodelist(dic, model)
     contentjson['info'] = {'version': 1,
                            'author': 'xcode'}
-    jsons = json.dumps(contentjson)
+    jsons = json.dumps(contentjson, indent=4)
     with open(icondir + '/Contents.json', 'w') as f:
         f.write(jsons)
 

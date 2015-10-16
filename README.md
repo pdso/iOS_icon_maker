@@ -16,12 +16,6 @@ optional arguments:
 -b path     png file path, 1024x1024 is best.
 ```
 
-# TODO
-* change the icon file Settings or Spolight.
-* Apple Watch support.
-* custom iOS Deployment Target.
-* format the json file.
-
 # The MIT License (MIT)
 
 Copyright (c) 2015 star
